@@ -13,6 +13,9 @@ library(rstan)
 library(loo)
 library(ggplot2)
 library(bayesplot)
+library(magrittr)
+library(tidyverse)
+select <- dplyr::select
 
 stopifnot(packageVersion("bayesplot") >= "1.4.0")
 
