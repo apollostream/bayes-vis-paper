@@ -1,4 +1,4 @@
-/* 8-schools centered parameterization */
+/* 8-schools non-centered parameterization */
 data {
   int<lower=0> J;            // number of schools
   real y[J];                 // estimated treatment effect (school j)
@@ -7,11 +7,16 @@ data {
 parameters {
   real mu;
   real<lower=0> tau;
+  vector[J] theta_tilde;
+}
+transformed parameters {
   vector[J] theta;
+  theta = tau * theta_tilde + mu;
 }
 model {
-  mu    ~ normal(0, 100);
-  tau   ~ cauchy(0, 10);
-  theta ~ normal(mu, tau); 
-  y     ~ normal(theta, sigma);
+  theta_tilde ~ normal(0, 1);
+  mu          ~ normal(0, 30);
+  tau         ~ cauchy(0, 10); 
+  y           ~ normal(theta, sigma);
 } 
+
